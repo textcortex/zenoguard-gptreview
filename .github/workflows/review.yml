@@ -1,0 +1,34 @@
+name: Zenoguard GPT Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        repository: 'textcortex/zenoguard-gptreview'
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        pip install requests
+
+    - name: Run Zenoguard GPT Review Script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        PULL_REQUEST_ID: ${{ github.event.number }}
+      run: python src/gpt_review.py
+
+
+
