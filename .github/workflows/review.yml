@@ -29,6 +29,3 @@ jobs:
         GITHUB_REPOSITORY: ${{ github.repository }}
         PULL_REQUEST_ID: ${{ github.event.number }}
       run: python .github/src/gpt_review.py
-
-
-
